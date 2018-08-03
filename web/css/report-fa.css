@@ -1,0 +1,23 @@
+body{
+    direction: rtl;
+}
+
+.w3-table td{
+     text-align: right;
+}
+
+.w3-table th{
+    text-align: right;
+}
+
+.description{
+    direction: ltr !important;
+}
+
+.av{
+    direction: ltr !important;
+}
+
+.details{
+    direction: ltr !important;
+}

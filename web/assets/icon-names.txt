@@ -1,0 +1,10 @@
+fingerprint
+home
+language
+account_circle
+security
+check_circle
+check
+warning
+report
+sentiment_very_dissatisfied

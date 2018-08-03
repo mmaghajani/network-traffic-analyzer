@@ -1,0 +1,11 @@
+h5{
+    direction: rtl;
+}
+
+#body-container{
+    direction: rtl;
+}
+
+.w3-bar-item{
+    direction: rtl !important;
+}
