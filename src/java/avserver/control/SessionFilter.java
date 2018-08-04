@@ -28,15 +28,7 @@ public class SessionFilter implements Filter {
 
         String reqURI = request.getRequestURI();
         HttpSession session = request.getSession(true);
-//        User user = (User) session.getAttribute("user");
-//        if (user == null) {
-//            user = Database.getGuestUser();
-//            session.setAttribute("user", user);
-//	        session.setMaxInactiveInterval(10 * 60); // 10 mins
-//            Logger.info("SESSION-FILTER: NO USER INFO;  SETTING AS GUEST.");
-//        }
         String httpReferer = request.getHeader("Referer");
-        String forwarder = (String) request.getAttribute("javax.servlet.forward.request_uri");
 
         /**
          * Perform checks based on the request URI
@@ -81,15 +73,6 @@ public class SessionFilter implements Filter {
                 return;
             }
         }
-        //
-//        if (reqURI.endsWith("feedback.jsp")) {
-//            if (user.UNAME.equals("guest")) {
-//                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-//                request.setAttribute("javax.servlet.error.status_code", HttpServletResponse.SC_UNAUTHORIZED);
-//                request.getServletContext().getRequestDispatcher("/error.jsp").forward(request, response);
-//                return;
-//            }
-//        }
         // else, all is fine so continue processing the request
         try {
             chain.doFilter(req, res);
