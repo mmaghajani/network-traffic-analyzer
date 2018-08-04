@@ -25,9 +25,9 @@ function loadContent() {
         $('#countryTitle').html('کشور ');
         $('#timeTitle').html('زمان پایش');
         $('#rescan').html('پایش مجدد');
-        $('#av').html('آنتی ویروس');
+        $('#av').html('ردیف داده');
         $('#detection-header').html('تشخیص');
-        $('#description').html('توضیحات');
+        $('#description').html('امتیاز');
         $('#return').html('بازگشت به صفحه بارگذاری');
         $('#oldBannerContent').html('این فایل قبلا توسط سرویس ما پایش گردیده است. تاریخ پایش قبلی : ' + last_scan_date);
         $('#loading').html('<p class="w3-center">در حال پایش ...</p>\n\
@@ -47,9 +47,9 @@ function loadContent() {
         $('#countryTitle').html(' Country');
         $('#timeTitle').html(' Time of Scan');
         $('#rescan').html('Rescan');
-        $('#av').html('Engine');
+        $('#av').html('Data Index');
         $('#detection-header').html('Detection');
-        $('#description').html('Description');
+        $('#description').html('Score');
         $('#return').html('Back to Upload Form');
         $('#oldBannerContent').html('This file was previously scanned by our service. Showing an old report from :' + last_scan_date);
         $('#loading').html('<p class="w3-center">Scan in Progress ...</p>\n\

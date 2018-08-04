@@ -114,7 +114,7 @@ public class Config {
 			// Database params
 			DB_DRIVER = "org.mariadb.jdbc.Driver";
 			props.setProperty("DB_DRIVER", DB_DRIVER);
-			DB_URL = "jdbc:mariadb://192.168.1.4:3306/";
+			DB_URL = "jdbc:mariadb://192.168.56.101:3306/";
 			props.setProperty("DB_URL", DB_URL);
 			DB_NAME = "av_server_db";
 			props.setProperty("DB_NAME", DB_NAME);

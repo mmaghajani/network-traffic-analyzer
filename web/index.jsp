@@ -20,9 +20,6 @@
         <script src="node_modules/jquery/dist/jquery.min.js"></script>
         <script src="js/SharedPreferences.js"></script>
         <script src="js/global.js"></script>
-        <script src="node_modules/sjcl/sjcl.js"></script>
-        <script src="node_modules/cryptojs/rollups/aes.js"></script>
-        <script src="node_modules/jsencrypt/bin/jsencrypt.min.js"></script>
         <script src="js/index.js"></script>
     </head>
 
