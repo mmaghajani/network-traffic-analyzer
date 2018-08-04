@@ -48,74 +48,6 @@ $(function () {
     });
 });
 
-function toBitArrayCodec(bytes) {
-    var out = [], i, tmp = 0;
-    for (i = 0; i < bytes.length; i++) {
-        tmp = tmp << 8 | bytes[i];
-        if ((i & 3) === 3) {
-            out.push(tmp);
-            tmp = 0;
-        }
-    }
-    if (i & 3) {
-        out.push(sjcl.bitArray.partial(8 * (i & 3), tmp));
-    }
-    return out;
-}
-
-/** Convert from a bitArray to an array of bytes. */
-function fromBitArrayCodec(arr) {
-    var out = [], bl = sjcl.bitArray.bitLength(arr), i, tmp;
-    for (i = 0; i < bl / 8; i++) {
-        if ((i & 3) === 0) {
-            tmp = arr[i / 4];
-        }
-        out.push(tmp >>> 24);
-        tmp <<= 8;
-    }
-    return out;
-}
-
-function arrayByteToBase64(bytes) {
-    var binary = '';
-    var len = bytes.byteLength;
-    for (var i = 0; i < len; i++) {
-        binary += String.fromCharCode(bytes[ i ]);
-    }
-    return window.btoa(binary);
-}
-
-function convertToBase64Bits(input) {
-    var bytes = new Uint8Array(input);
-    var base64Bits = arrayByteToBase64(bytes);
-    return base64Bits;
-}
-
-function intToByte(input) {
-    // we want to represent the input as a 8-bytes array
-    var byteArray = [0, 0, 0, 0];
-    var integer = input
-    for (var index = 0; index < byteArray.length; index++) {
-        var byte = integer & 0xff;
-        byteArray [ index ] = byte;
-        integer = (integer - byte) / 256;
-    }
-
-    return byteArray;
-}
-;
-
-function conv(input) {
-    var uint8array = new Array();
-    for (var i = 0; i < input.length; i++) {
-        var bytes = intToByte(input[i])
-        for (var j = bytes.length - 1; j >= 0; j--) {
-            uint8array.push(bytes[j])
-        }
-    }
-    return uint8array;
-}
-
 var uploaded_file;
 
 $(function () {
@@ -135,27 +67,9 @@ $(function () {
         var type = file.type;
         var name = file.name;
 
-//        rsaEncrypt = new JSEncrypt();
-//        publicKey = getPublicKey();
-//        rsaEncrypt.setPublicKey(publicKey);
-
-//        var symmKey = new Uint32Array(sjcl.random.randomWords(6, 4));
-//        var convSymmKey = conv(symmKey);
-//        var base64BitsOfSymmKey = convertToBase64Bits(convSymmKey);
-
         var reader = new FileReader();
         reader.onload = function () {
-//            var base64BitsFile = convertToBase64Bits(this.result);
             setTimeout(function () {
-//                var encryptedData = CryptoJS.AES.encrypt(base64BitsFile, base64BitsOfSymmKey, {padding: CryptoJS.pad.Pkcs7});
-//
-//                var encryptedKey = rsaEncrypt.encrypt(encryptedData.key.toString());
-//                data.delete('key');
-//                data.append("key", encryptedKey);
-//                var encryptedIV = rsaEncrypt.encrypt(encryptedData.iv.toString());
-//                data.append("iv", encryptedIV);
-
-//                var encryptedFile = new Blob([encryptedData.ciphertext.toString()], {type: type});
                 data.delete("file");
                 data.append("file", uploaded_file, name);
                 // disabled the submit button
