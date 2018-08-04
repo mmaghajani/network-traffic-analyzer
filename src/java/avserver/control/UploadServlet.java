@@ -2,13 +2,11 @@
 package avserver.control;
 
 import avserver.config.Config;
-import avserver.utils.Decryption;
 import avserver.utils.Logger;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.GeneralSecurityException;
 import java.util.Base64;
 import java.util.Iterator;
 import java.util.List;
@@ -17,8 +15,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -50,12 +46,8 @@ public class UploadServlet extends HttpServlet {
         String contentType = "";
         String sha256Digest = "";
         File uploadedFile = null;
-        byte[] key = null;
-        byte[] tag = null;
-        byte[] iv = null;
 
         HttpSession session = request.getSession(false);
-//        User user = (User) session.getAttribute("user");
 
         /**
          * Apache Commons FileUpload Usage Guide:
@@ -79,18 +71,6 @@ public class UploadServlet extends HttpServlet {
                     FileItem item = iter.next();
                     // handle file uploads
                     switch (item.getFieldName()) {
-                        case "iv":
-                            iv = Base64.getDecoder().decode(item.get());
-                            break;
-
-                        case "key":
-                            key = Base64.getDecoder().decode(item.get());
-                            break;
-
-                        case "tag":
-                            tag = Base64.getDecoder().decode(item.get());
-                            break;
-
                         case "file":
                             fileName = item.getName();
                             contentType = item.getContentType();
@@ -162,33 +142,6 @@ public class UploadServlet extends HttpServlet {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
-
-        // if user is not 'guest', file needs to be decrypted
-//        Logger.info("USER = " + user.UNAME);
-//        if (!user.UNAME.equals("guest")) {
-//            if (key == null || iv == null) {
-//                Logger.error("NO [key] or [iv] PART UPLOADED!");
-//                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-//                return;
-//            } else {
-//                try {
-//                    Logger.info("Decrypting ...");
-//                    iv = Decryption.decryptParam(iv, user.UNAME);
-//                    iv = Hex.decodeHex(new String(iv).toCharArray());//Base64.getDecoder().decode(iv);
-//                    //Logger.info("IV LENGTH = " + iv.length);
-//                    key = Decryption.decryptParam(key, user.UNAME);
-//                    key = Hex.decodeHex(new String(key).toCharArray());//Base64.getDecoder().decode(key);
-//                    //Logger.info("KEY LENGTH = " + key.length);
-//                    Decryption.decryptFile(uploadedFile.getPath(), key, iv);
-//                    Logger.info("File Decrypted.");
-//                    sizeInBytes = uploadedFile.length();
-//                } catch (IOException | GeneralSecurityException | DecoderException ex) {
-//                    Logger.error(ex);
-//                    response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-//                    return;
-//                }
-//            }
-//        }
 
         // compute file checksum
         try (InputStream fis = new FileInputStream(uploadedFile)) {
