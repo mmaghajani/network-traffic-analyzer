@@ -22,11 +22,12 @@ public class InsertReportQuery implements QueryTask<Boolean> {
 
 	@Override
 	public void exec(Connection DB) throws SQLException {
-		String sql = "INSERT INTO Reports (analyse_id, data_index, det_id) VALUES (?, ?, ?)";
+		String sql = "INSERT INTO Reports (analyse_id, data_index, det_id, score) VALUES (?, ?, ?, ?)";
 		try(PreparedStatement pst = DB.prepareStatement(sql)) {
 			pst.setLong(1, report.ANALYSE.ID);
 			pst.setLong(2, report.DATA_INDEX);
 			pst.setLong(3, report.DETECTION.ID);
+			pst.setDouble(4, report.SCORE);
 			result = pst.executeUpdate() == 1;
 		}
 	}

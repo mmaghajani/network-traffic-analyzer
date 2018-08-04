@@ -33,7 +33,8 @@ public class GetReportsQuery implements QueryTask<ArrayList<Report>> {
 			try (ResultSet rs = pst.executeQuery()) {
 				while (rs.next()) {
 					Detection det = Database.getDetection(rs.getByte("det_id"));
-					reports.add(new Report(ANALYSE, det, rs.getInt("data_index")));
+					reports.add(new Report(ANALYSE, det, rs.getInt("data_index"),
+                                                rs.getDouble("score")));
 				}
 			}
 		}

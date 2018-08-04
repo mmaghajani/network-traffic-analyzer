@@ -125,7 +125,7 @@ function addDataToTable() {
     for (var i = 0; i < Data.length; i++) {
         $("#result").append("<tr class='table-record'><td class='av'>" + Data[i].DATA_INDEX + "</td>"
                 + "<td class='detection'>" + Data[i].DETECTION.DEFINITION + "</td>"
-                + "<td class='description'>" + Data[i].DESCRIPTION + "</td></tr>");
+                + "<td class='description'>" + Data[i].SCORE + "</td></tr>");
     }
 }
 

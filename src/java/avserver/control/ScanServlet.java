@@ -197,10 +197,11 @@ public class ScanServlet extends HttpServlet {
 			if (statusCode == 200) {
 				byte detID = scanner.nextByte();
 				int data_index = scanner.nextInt();
+                                double score = scanner.nextDouble();
 				// create new report and insert it into database
 //				Antivirus av = Database.getAntivirus(avID);
 				Detection det = Database.getDetection(detID);
-				Report report = new Report(scan, det, data_index);
+				Report report = new Report(scan, det, data_index, score);
 //                                Antivirus av = new Antivirus(detID, "mammad", t);
 //                                Detection det = new Detection(detID, "very bad trojan");
 //				Report report = new Report(scan, det, 1);
@@ -213,7 +214,7 @@ public class ScanServlet extends HttpServlet {
 				// create new report and insert it into database
 //				Antivirus av = Database.getAntivirus(avID);
 				Detection det = Database.getDetection(detID);
-				Report report = new Report(scan, det, 10);
+				Report report = new Report(scan, det, 10, 0.90);
 				reportsList.add(report);
 				Database.insertReport(report);
 				Logger.warn("Scan FAILED with code #" + statusCode + ": " + statusDescr);
