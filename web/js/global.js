@@ -42,10 +42,6 @@ function loadGlobalContent() {
     }
 }
 
-function selectFileKeyModal() {
-    $("#key-select").click();
-}
-
 function fileSelected(e) {
     var file = e.files[0];
     var reader = new FileReader();
