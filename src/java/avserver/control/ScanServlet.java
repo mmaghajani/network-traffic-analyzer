@@ -165,24 +165,6 @@ public class ScanServlet extends HttpServlet {
 		scan = scan.updateID(scanID);
 		Logger.info("Scan information inserted with ID = " + scanID);
 		
-		// compress and archive the file in a separate thread
-//		new Thread(new Runnable() {
-//			@Override
-//			public void run() {
-//				try {
-//					// if it's a guest user, keep the file in the archive
-//					if (user.UNAME.equals("guest"))
-//						archiveFile(fileName, scanID);
-//					else // it's a registered user, don't keep the file
-//						new File(Config.UPLOAD_DIR + fileName).delete();
-//				} catch (IOException ex) {
-//					Logger.error("Archiving " + fileName + 
-//								 " with scan-ID " + scanID + " failed!");
-//					Logger.error(ex);
-//				}
-//			}
-//		}).start();
-		
 		// read std-output of scan-process line by line
 		ArrayList<Report> reportsList = new ArrayList<>();
 		String line; 
@@ -191,71 +173,18 @@ public class ScanServlet extends HttpServlet {
 		while ((line = stdout.readLine()) != null) {
 			// process each line
 			Scanner scanner = new Scanner(line).useDelimiter("#");
-			byte avID = scanner.nextByte();
-			String statusDescr = scanner.next();
-			int statusCode = scanner.nextInt();
-			if (statusCode == 200) {
-				byte detID = scanner.nextByte();
-				int data_index = scanner.nextInt();
-                                double score = scanner.nextDouble();
-				// create new report and insert it into database
-//				Antivirus av = Database.getAntivirus(avID);
-				Detection det = Database.getDetection(detID);
-				Report report = new Report(scan, det, data_index, score);
-//                                Antivirus av = new Antivirus(detID, "mammad", t);
-//                                Detection det = new Detection(detID, "very bad trojan");
-//				Report report = new Report(scan, det, 1);
-				reportsList.add(report);
-				Database.insertReport(report);
-				Logger.info("Report  inserted.");
-			} else {
-				byte detID = Detection.FAILED;
-				String dscr = "Scan Failed!";
-				// create new report and insert it into database
-//				Antivirus av = Database.getAntivirus(avID);
-				Detection det = Database.getDetection(detID);
-				Report report = new Report(scan, det, 10, 0.90);
-				reportsList.add(report);
-				Database.insertReport(report);
-				Logger.warn("Scan FAILED with code #" + statusCode + ": " + statusDescr);
-				Logger.warn("Report of FAILED scan inserted.");
-			}
+                        byte detID = scanner.nextByte();
+                        int data_index = scanner.nextInt();
+                        double score = scanner.nextDouble();
+                        // create new report and insert it into database
+                        Detection det = Database.getDetection(detID);
+                        Report report = new Report(scan, det, data_index, score);
+                        reportsList.add(report);
+                        Database.insertReport(report);
+                        Logger.info("Report  inserted.");
 		}
 		return reportsList;
 	}
-	
-	/**
-	 * Zip and archive the file using its scan-ID.
-	 */
-	private void archiveFile(String fileName, long scanID) throws IOException {
-		String filePath = Config.UPLOAD_DIR + fileName;
-		String zipPath = Config.UPLOAD_DIR + scanID + ".zip";
-		try (ZipOutputStream zip = new ZipOutputStream(new FileOutputStream(zipPath))) {
-			ZipEntry zentry = new ZipEntry(fileName);
-			zip.putNextEntry(zentry);
-			try (FileInputStream in = new FileInputStream(filePath)) {
-				int len;
-				byte[] buffer = new byte[8192];
-				while ((len = in.read(buffer)) > 0)
-					zip.write(buffer, 0, len);
-			}
-			zip.closeEntry();
-		}
-		// finally, delete uploaded file
-		new File(filePath).delete();
-	}
-	
-	/**
-	 * Rename/Move a given file to a new path.
-	 */
-	private boolean renameFile(String currentPath, String newPath) {
-		File current  = new File(currentPath);
-		File newFile = new File(newPath);
-		if (newFile.exists()) 
-			newFile.delete();
-		return current.renameTo(newFile);
-	}
-	
 	
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 	/**
