@@ -90,7 +90,10 @@
 						<tr>
 							<th id="av" class="header-table"></th>
 							<th id="detection" class="header-table"><span id="detection-header"></span></th>
-							<th id="description" class="header-table"></th>
+							<th id="score1" class="header-table"></th>
+							<th id="score2" class="header-table"></th>
+							<th id="score3" class="header-table"></th>
+							<th id="score4" class="header-table"></th>
 						</tr>
 					</table>
 

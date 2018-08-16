@@ -27,7 +27,10 @@ function loadContent() {
         $('#rescan').html('پایش مجدد');
         $('#av').html('ردیف داده');
         $('#detection-header').html('تشخیص');
-        $('#description').html('امتیاز');
+        $('#score1').html('IF');
+        $('#score2').html('FastVOA');
+        $('#score3').html('LOF');
+        $('#score4').html('SVM');
         $('#return').html('بازگشت به صفحه بارگذاری');
         $('#oldBannerContent').html('این فایل قبلا توسط سرویس ما پایش گردیده است. تاریخ پایش قبلی : ' + last_scan_date);
         $('#loading').html('<p class="w3-center">در حال پایش ...</p>\n\
@@ -49,7 +52,10 @@ function loadContent() {
         $('#rescan').html('Rescan');
         $('#av').html('Data Index');
         $('#detection-header').html('Detection');
-        $('#description').html('Score');
+        $('#score1').html('IF');
+        $('#score2').html('FastVOA');
+        $('#score3').html('LOF');
+        $('#score4').html('SVM');
         $('#return').html('Back to Upload Form');
         $('#oldBannerContent').html('This file was previously scanned by our service. Showing an old report from :' + last_scan_date);
         $('#loading').html('<p class="w3-center">Scan in Progress ...</p>\n\
@@ -125,7 +131,10 @@ function addDataToTable() {
     for (var i = 0; i < Data.length; i++) {
         $("#result").append("<tr class='table-record'><td class='av'>" + Data[i].DATA_INDEX + "</td>"
                 + "<td class='detection'>" + Data[i].DETECTION.DEFINITION + "</td>"
-                + "<td class='description'>" + Data[i].SCORE + "</td></tr>");
+                + "<td class='Score1'>" + Data[i].SCORE1 + "</td>"
+                + "<td class='Score2'>" + Data[i].SCORE2 + "</td>"
+                + "<td class='Score3'>" + Data[i].SCORE3 + "</td>"
+                + "<td class='Score4'>" + Data[i].SCORE4 + "</td></tr>");
     }
 }
 

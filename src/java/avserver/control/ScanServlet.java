@@ -175,10 +175,13 @@ public class ScanServlet extends HttpServlet {
 			Scanner scanner = new Scanner(line).useDelimiter("#");
                         byte detID = scanner.nextByte();
                         int data_index = scanner.nextInt();
-                        double score = scanner.nextDouble();
+                        double score1 = scanner.nextDouble();
+                        double score2 = scanner.nextDouble();
+                        double score3 = scanner.nextDouble();
+                        double score4 = scanner.nextDouble();
                         // create new report and insert it into database
                         Detection det = Database.getDetection(detID);
-                        Report report = new Report(scan, det, data_index, score);
+                        Report report = new Report(scan, det, data_index, score1, score2, score3, score4);
                         reportsList.add(report);
                         Database.insertReport(report);
                         Logger.info("Report  inserted.");
